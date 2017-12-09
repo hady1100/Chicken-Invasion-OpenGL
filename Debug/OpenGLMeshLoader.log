@@ -1,0 +1,25 @@
+﻿Build started 12/9/2017 3:29:58 AM.
+     1>Project "C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\OpenGLMeshLoader.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\OpenGLMeshLoader.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /IC:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\\.. /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt OpenGLMeshLoader.cpp
+         OpenGLMeshLoader.cpp
+     1>c:\users\pc\desktop\graphics\openglmeshloader\texturebuilder.h(27): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+     1>c:\users\pc\desktop\graphics\openglmeshloader\texturebuilder.h(28): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\\.. glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\OpenGLMeshLoader.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.lib" /MACHINE:X86 Debug\GLTexture.obj
+         Debug\Model_3DS.obj
+         Debug\OpenGLMeshLoader.obj
+     1>GLTexture.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+         OpenGLMeshLoader.vcxproj -> C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe;#1" /manifest Debug\OpenGLMeshLoader.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Debug\OpenGLMeshLoader.unsuccessfulbuild".
+         Touching "Debug\OpenGLMeshLoader.lastbuildstate".
+     1>Done Building Project "C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\OpenGLMeshLoader.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.92
