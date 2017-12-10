@@ -1,8 +1,12 @@
 #include "TextureBuilder.h"
 #include "Model_3DS.h"
 #include "GLTexture.h"
+#include <cmath>
 #include <glut.h>
 
+int level = 1;
+float levelOneAnim= 0.0;
+float angle = 0;
 int WIDTH = 1280;
 int HEIGHT = 720;
 float backgroundAnim = 0.0;
@@ -57,7 +61,7 @@ struct Chicken{
 };
 
 Bullet bullet[200];
-Chicken chicken[30];
+Chicken chicken[12];
 
 Bullet create_bullet(float x, float y, float z){
 	Bullet b;
@@ -71,47 +75,72 @@ void hide_bullet(Bullet* b){
 }
 
 void create_chicken(){
-	int xTra = 3;
-	int yTra = 3;
-	for(int i = 0; i<30; i++){
+	int xTra = 12;
+	int yTra = 6;
+	for(int i = 0; i<12; i++){
 		chicken[i].x= xTra;
 		chicken[i].y= yTra;
 		chicken[i].z= 3;
 		chicken[i].visible = true;
-		chicken[i].model_chicken.Load("Models/chicken/Chicken N161109.3DS"); 
-		if(xTra< 27){
+		if(level ==1){
+			chicken[i].model_chicken.Load("Models/chicken/Chicken N161109.3DS"); 
+		} else{ chicken[i].model_chicken.visible=true;}
+		if((i+1)%4 != 0){
 			xTra=xTra+3;
 		} else{
-			xTra=3;
+			xTra=12;
 			yTra=yTra+3;
 		}
 	}
 }
 
+
 void draw_chicken(){
-	for(int i=0; i<30; i++){
+	for(int i=0; i<12; i++){
 		if(chicken[i].visible == true){
 			glPushMatrix();
+			if(level == 1){
+				if((i+1)%4==0){
+					if(chicken[i].x > 6){
+						chicken[i].x = chicken[i].x - 0.0055;
+					}
+				} else if((i+1)%4==1){
+					if(chicken[i].x < 23){
+						chicken[i].x = chicken[i].x + 0.0055;
+					}
+				}
+			} else if(level == 2){
+				if((i+1)%4==0 || (i+1)%4==3){ 
+						chicken[i].y = 10 + (float)(sin(angle)*5);
+  				} else {
+						chicken[i].y = 10 - (float)(sin(angle)*5);
+					}
+			} else if(level == 3){
+				if((i+1)%4==0||(i+1)%4==1){
+						chicken[i].x = 10 + (sinf(angle)*5);
+				} else {
+						chicken[i].x = 10 - (sinf(angle)*5);
+					}
+			}
 			glTranslated(chicken[i].x, chicken[i].y, chicken[i].z);
-			glRotated(-80,0,1,0);
-			glScaled(1.5,1.5,1.5);
+			glRotated(90,1,0,0);
+			glScaled(0.02,0.02,0.02);
 			chicken[i].model_chicken.Draw();
 			glPopMatrix();
 		} else {
 			chicken[i].model_chicken.visible =false;
-			printf("%di \n", i);
 		}
 	}
 }
 
 void check_collision(){
-	for(int i=0; i<30; i++){
+	for(int i=0; i<12; i++){
 		for(int j=0; j<200; j++){
 			if(bullet[j].visible == false || chicken[i].visible == false)
 				continue;
 			if(chicken[i].z - 0.2 <= bullet[j].z && chicken[i].z + 0.2 >= bullet[j].z){
-				bool condition = chicken[i].x+0.6>=bullet[j].x && chicken[i].x-0.6<=bullet[j].x 
-					&& chicken[i].y+0.6>=bullet[j].y && chicken[i].y-0.6<=bullet[j].y;
+				bool condition = chicken[i].x+0.8>=bullet[j].x && chicken[i].x-0.8<=bullet[j].x 
+					&& chicken[i].y+1.2>=bullet[j].y && chicken[i].y-0.8<=bullet[j].y;
 				if(condition){
 					chicken[i].visible=false;
 					bullet[j].visible=false;
@@ -121,6 +150,17 @@ void check_collision(){
 	}
 }
 
+
+void levelUpdate(){
+	for(int i = 0; i<12; i++){
+		if(chicken[i].visible == true){
+			return;
+		}
+	}
+	level=level +1;
+	chickenForward = 0;
+	create_chicken();
+}
 // Model Variables
 Model_3DS model_ship;
 
@@ -308,17 +348,16 @@ void myDisplay(void)
 
 	glPushMatrix();
 	glTranslated(15+spaceShipLocationX,5+spaceShipLocationY,30);
-	glScaled(0.05,0.05,0.05);
+	glScaled(2,2,2);
 	model_ship.Draw();
 	glPopMatrix();
 
 	//handle  bullets
 	for(int i =0; i < 200; i++){
 		if(bullet[i].visible == true){
-			bullet[i].z -=  0.2;
+			bullet[i].z -=  0.5;
 		glPushMatrix();
 		glTranslated(bullet[i].x, bullet[i].y, bullet[i].z-0.7);
-		//glTranslated(10, 10, 15);
 		glutSolidSphere(0.15, 20, 20);
 		glPopMatrix();
 			if(bullet[i].z < -1)
@@ -344,22 +383,22 @@ void spaceShipNavigation(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
 		if(spaceShipLocationY < 10){
-			spaceShipLocationY = spaceShipLocationY + 0.1;
+			spaceShipLocationY = spaceShipLocationY + 0.2;
 		}
 		break;
 	case GLUT_KEY_DOWN:
 		if(spaceShipLocationY > 0){
-			spaceShipLocationY = spaceShipLocationY - 0.1;
+			spaceShipLocationY = spaceShipLocationY - 0.2;
 		}
 		break;
 	case GLUT_KEY_LEFT:
 		if(spaceShipLocationX > -10){
-			spaceShipLocationX = spaceShipLocationX - 0.1;
+			spaceShipLocationX = spaceShipLocationX - 0.2;
 		}
 		break;
 	case GLUT_KEY_RIGHT:
 		if(spaceShipLocationX < 10){
-			spaceShipLocationX = spaceShipLocationX + 0.1;
+			spaceShipLocationX = spaceShipLocationX + 0.2;
 		}
 		break;
 	}
@@ -468,8 +507,7 @@ void myReshape(int w, int h)
 void LoadAssets()
 {
 	// Loading Model files
-	model_ship.Load("Models/ship/models/space craft.3DS");
-	//model_chicken.Load("Models/chicken/Chicken N161109.3DS");
+	//model_ship.Load("Models/ship/models/scavenger.3DS");
 	create_chicken();
 	loadBMP(&tex_space, "textures/ground.bmp", true);
 	loadBMP(&tex_space_left, "textures/ground.bmp", true);
@@ -479,8 +517,10 @@ void LoadAssets()
 }
 
 void Timer(int value){
+	levelUpdate();
 	backgroundAnim = backgroundAnim + 0.0020;
-	chickenForward = chickenForward + 0.06;
+	chickenForward = chickenForward + 0.01;
+	angle = angle + 0.01;
 	check_collision();
 	if(first_person){
 		Eye.x=15+spaceShipLocationX; 

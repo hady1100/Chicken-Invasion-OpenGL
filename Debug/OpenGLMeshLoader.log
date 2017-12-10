@@ -1,4 +1,4 @@
-﻿Build started 12/9/2017 3:29:58 AM.
+﻿Build started 12/10/2017 7:09:52 PM.
      1>Project "C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\OpenGLMeshLoader.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OpenGLMeshLoader.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -22,4 +22,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.92
+Time Elapsed 00:00:02.03
