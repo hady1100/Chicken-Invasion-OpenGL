@@ -142,6 +142,7 @@ void draw_chicken(){
 
 void check_collision(){
 	if(chickenForward >=20){
+		chickenForward = chickenForward +10;
 		lose = true;
 		return;
 	}
@@ -167,6 +168,9 @@ GLuint tex_space_left;
 GLuint tex_space_right;
 GLuint tex_space_top;
 GLuint tex_space_bottom;
+GLuint tex_win;
+GLuint tex_lose;
+
 
 
 void levelUpdate(){
@@ -447,9 +451,20 @@ void myDisplay(void)
 	drawSpace();
     glPopMatrix();
 
+    //win lose
+	if(win || lose){
 	glPushMatrix();
-	glTranslated(15+spaceShipLocationX,5+spaceShipLocationY,30);
-	glScaled(0.75,0.75,0.75);
+	glTranslated(15,10,20);
+	glScaled(30,20,30);
+	glRotated(-90,1,0,0);
+	if(win){
+		drawWallFace(tex_win);}
+	else{ drawWallFace(tex_lose);}
+	glPopMatrix();
+	}
+	glPushMatrix();
+	glTranslated(17.45+spaceShipLocationX,5+spaceShipLocationY,31);
+	glScaled(0.3,0.3,0.3);
 	model_ship.Draw();
 	glPopMatrix();
 
@@ -608,8 +623,10 @@ void myReshape(int w, int h)
 void LoadAssets()
 {
 	// Loading Model files
-	model_ship.Load("Models/ship/models/LP Fighter 1.3DS");
+	model_ship.Load("Models/ship/models/Tree1.3DS");
 	create_chicken();
+	loadBMP(&tex_lose, "textures/lose.bmp",true);
+	loadBMP(&tex_win, "textures/win.bmp",true);
 	loadBMP(&tex_space, "textures/level1.bmp", true);
 	loadBMP(&tex_space_left, "textures/level1.bmp", true);
 	loadBMP(&tex_space_right, "textures/level1.bmp", true);
@@ -620,13 +637,13 @@ void LoadAssets()
 void Timer(int value){
 	levelUpdate();
 	backgroundAnim = backgroundAnim + 0.0020;
-	chickenForward = chickenForward + 0.01;
+	chickenForward = chickenForward + 0.015;
 	angle = angle + 0.01;
 	check_collision();
 	if(first_person){
 		Eye.x=15+spaceShipLocationX; 
 		Eye.y=5+spaceShipLocationY;
-		Eye.z=25.5;
+		Eye.z=23;
 		At.x=15+spaceShipLocationX;
 		At.y=5+spaceShipLocationY;
 		At.z=0;

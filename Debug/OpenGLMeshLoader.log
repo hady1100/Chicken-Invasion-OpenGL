@@ -1,4 +1,4 @@
-﻿Build started 12/12/2017 5:31:24 PM.
+﻿Build started 12/14/2017 3:38:14 PM.
      1>Project "C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\OpenGLMeshLoader.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\OpenGLMeshLoader.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -7,25 +7,14 @@
          OpenGLMeshLoader.cpp
      1>c:\users\pc\desktop\graphics\openglmeshloader\texturebuilder.h(27): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
      1>c:\users\pc\desktop\graphics\openglmeshloader\texturebuilder.h(28): warning C4244: 'argument' : conversion from 'int' to 'GLfloat', possible loss of data
-     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(441): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(445): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(443): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(447): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(105) : see declaration of 'strcpy'
-     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(444): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\pc\desktop\graphics\openglmeshloader\openglmeshloader.cpp(448): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files (x86)\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\\.. glut32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\OpenGLMeshLoader.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.lib" /MACHINE:X86 Debug\GLTexture.obj
          Debug\Model_3DS.obj
          Debug\OpenGLMeshLoader.obj
      1>GLTexture.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
-         OpenGLMeshLoader.vcxproj -> C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\Debug\OpenGLMeshLoader.exe;#1" /manifest Debug\OpenGLMeshLoader.exe.intermediate.manifest
-       FinalizeBuildStatus:
-         Deleting file "Debug\OpenGLMeshLoader.unsuccessfulbuild".
-         Touching "Debug\OpenGLMeshLoader.lastbuildstate".
-     1>Done Building Project "C:\Users\pc\Desktop\Graphics\OpenGLMeshLoader\OpenGLMeshLoader.vcxproj" (build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:02.19
