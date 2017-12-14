@@ -3,6 +3,10 @@
 #include "GLTexture.h"
 #include <cmath>
 #include <glut.h>
+#include <string>
+#include <sstream>
+#include <iostream>
+using namespace std;
 
 int level = 1;
 float levelOneAnim= 0.0;
@@ -14,8 +18,11 @@ float spaceShipLocationX = 0.0;
 float spaceShipLocationY = 0.0;
 char title[] = "3D Model Loader Sample";
 float chickenForward = 0.0;
+int score = 0;
 bool first_person = false;
 bool change = false;
+bool win = false;
+bool lose =  false;
 // 3D Projection Options
 GLdouble fovy = 45.0;
 GLdouble aspectRatio =  (GLdouble)WIDTH / (GLdouble)HEIGHT;
@@ -134,6 +141,10 @@ void draw_chicken(){
 }
 
 void check_collision(){
+	if(chickenForward >=20){
+		lose = true;
+		return;
+	}
 	for(int i=0; i<12; i++){
 		for(int j=0; j<200; j++){
 			if(bullet[j].visible == false || chicken[i].visible == false)
@@ -144,11 +155,18 @@ void check_collision(){
 				if(condition){
 					chicken[i].visible=false;
 					bullet[j].visible=false;
+					score = score + (level * 2);
 				}
 			}
 		}
 	}
 }
+// Textures
+GLuint tex_space;
+GLuint tex_space_left;
+GLuint tex_space_right;
+GLuint tex_space_top;
+GLuint tex_space_bottom;
 
 
 void levelUpdate(){
@@ -158,19 +176,44 @@ void levelUpdate(){
 		}
 	}
 	level=level +1;
+	if(level == 2){
+		loadBMP(&tex_space, "textures/level2.bmp", true);
+		loadBMP(&tex_space_left, "textures/level2.bmp", true);
+		loadBMP(&tex_space_right, "textures/level2.bmp", true);
+		loadBMP(&tex_space_bottom, "textures/level2.bmp", true);
+		loadBMP(&tex_space_top, "textures/level2.bmp", true);
+	}
+	if(level ==3){
+		loadBMP(&tex_space, "textures/level3.bmp", true);
+		loadBMP(&tex_space_left, "textures/level3.bmp", true);
+		loadBMP(&tex_space_right, "textures/level3.bmp", true);
+		loadBMP(&tex_space_bottom, "textures/level3.bmp", true);
+		loadBMP(&tex_space_top, "textures/level3.bmp", true);
+	}
+	if(level == 4){
+	win = true;
+	return;
+	}
 	chickenForward = 0;
 	create_chicken();
 }
 // Model Variables
 Model_3DS model_ship;
 
-// Textures
-GLuint tex_space;
-GLuint tex_space_left;
-GLuint tex_space_right;
-GLuint tex_space_top;
-GLuint tex_space_bottom;
 
+void print(int x, int y,int z, char *string)
+{
+//set the position of the text in the window using the x and y coordinates
+glRasterPos2f(x,y);
+//get the length of the string to display
+int len = (int) strlen(string);
+
+//loop to display character by character
+for (int i = 0; i < len; i++) 
+{
+glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24,string[i]);
+}
+};
 //=======================================================================
 // Lighting Configuration Function
 //=======================================================================
@@ -181,7 +224,9 @@ void InitLightSource()
 
 	// Enable Light Source number 0
 	// OpengL has 8 light sources
-	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
+
 
 	// Define Light source 0 ambient light
 	GLfloat ambient[] = { 0.1f, 0.1f, 0.1, 1.0f };
@@ -198,6 +243,50 @@ void InitLightSource()
 	// Finally, define light source 0 position in World Space
 	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+	GLfloat l0Diffuse[] = { 0.5f, 0.0f, 0.0f, 1.0f };
+	GLfloat l0Ambient[] = { 0.1f, 0.0f, 0.0f, 1.0f };
+	GLfloat l0Position[] = { -10.0f, 10.0f, 30.0f, true };
+	GLfloat l0Direction[] = { 1.0, 0.0, 0.0 };
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, l0Diffuse);
+	glLightfv(GL_LIGHT1,GL_AMBIENT, l0Ambient);
+	glLightfv(GL_LIGHT1, GL_POSITION, l0Position);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 30.0);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 90.0);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, l0Direction);
+
+	GLfloat l2Diffuse[] = { 0.0f, 0.5f, 0.0f, 1.0f };
+	GLfloat l2Ambient[] = { 0.0f, 0.1f, 0.0f, 1.0f };
+	GLfloat l2Position[] = { 30.0f, 10.0f, 30.0f, true };
+	//GLfloat l2Specular[]={0.0,1.0,0.0,1.0};
+	GLfloat l2Direction[] = { -1.0, 0.0, 0.0 };
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, l2Diffuse);
+	glLightfv(GL_LIGHT2,GL_AMBIENT, l2Ambient);
+	glLightfv(GL_LIGHT2, GL_POSITION, l2Position);
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, l2Direction);
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 30.0);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 90.0);
+
+	GLfloat l3Diffuse[] = { 0.5f, 0.5f, 0.0f, 1.0f };
+	GLfloat l3Ambient[] = { 0.1f, 0.1f, 0.0f, 1.0f };
+	GLfloat l3Position[] = { 15.0f, 30.0f, 30.0f, true };
+	GLfloat l3Specular[]={1.0,1.0,0.0,1.0};
+	GLfloat l3Direction[] = { 0.0, -1.0, 0.0 };
+
+	GLfloat m3Diffuse[] = { 0.99, 1.00, 0.54, 1.0 };
+	GLfloat m3Ambient[] = { 0.11, 0.06, 0.11, 1.0 };
+	//GLfloat m3Specular[]={0.33,0.33,0.52,1.0};
+
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, l3Diffuse);
+	glLightfv(GL_LIGHT3,GL_AMBIENT, l3Ambient);
+	glLightfv(GL_LIGHT3, GL_POSITION, l3Position);
+	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, l3Direction);
+	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 30.0);
+
+	//glMaterialfv(GL_FRONT,GL_AMBIENT,m3Ambient);
+	//glMaterialfv(GL_FRONT,GL_DIFFUSE,m3Diffuse);
+	//glMaterialfv(GL_FRONT,GL_SPECULAR,m3Specular);
+	
 }
 
 //=======================================================================
@@ -338,17 +427,29 @@ void drawSpace(){
 void myDisplay(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	GLfloat lmodel_ambient[] = { 0.1f, 0.1f, 0.1f, 1.0f };
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
 	GLfloat lightIntensity[] = { 0.7, 0.7, 0.7, 1.0f };
 	GLfloat lightPosition[] = {0.0f, 100.0f, 0.0f, 0.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
 
+	string str = to_string(static_cast<long long>(score));
+	const char* a = str.c_str();
+	char* final_string = new char[str.length()+1];
+	strcpy(final_string, a);
+	char res[100];
+	strcpy(res, "score: ");
+	strcat(res, final_string);
+	glPushMatrix();
+	print(1,18,1, res);
 	drawSpace();
+    glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(15+spaceShipLocationX,5+spaceShipLocationY,30);
-	glScaled(2,2,2);
+	glScaled(0.75,0.75,0.75);
 	model_ship.Draw();
 	glPopMatrix();
 
@@ -507,13 +608,13 @@ void myReshape(int w, int h)
 void LoadAssets()
 {
 	// Loading Model files
-	//model_ship.Load("Models/ship/models/scavenger.3DS");
+	model_ship.Load("Models/ship/models/LP Fighter 1.3DS");
 	create_chicken();
-	loadBMP(&tex_space, "textures/ground.bmp", true);
-	loadBMP(&tex_space_left, "textures/ground.bmp", true);
-	loadBMP(&tex_space_right, "textures/ground.bmp", true);
-	loadBMP(&tex_space_bottom, "textures/ground.bmp", true);
-	loadBMP(&tex_space_top, "textures/ground.bmp", true);
+	loadBMP(&tex_space, "textures/level1.bmp", true);
+	loadBMP(&tex_space_left, "textures/level1.bmp", true);
+	loadBMP(&tex_space_right, "textures/level1.bmp", true);
+	loadBMP(&tex_space_bottom, "textures/level1.bmp", true);
+	loadBMP(&tex_space_top, "textures/level1.bmp", true);
 }
 
 void Timer(int value){
@@ -525,7 +626,7 @@ void Timer(int value){
 	if(first_person){
 		Eye.x=15+spaceShipLocationX; 
 		Eye.y=5+spaceShipLocationY;
-		Eye.z=28.5;
+		Eye.z=25.5;
 		At.x=15+spaceShipLocationX;
 		At.y=5+spaceShipLocationY;
 		At.z=0;
@@ -576,6 +677,9 @@ void main(int argc, char** argv)
 		glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);
+	//glEnable(GL_LIGHT1);
+	//glEnable(GL_LIGHT2);
+	//glEnable(GL_LIGHT3);
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_COLOR_MATERIAL);
 
