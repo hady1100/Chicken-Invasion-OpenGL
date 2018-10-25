@@ -1,3 +1,5 @@
+A very primitive 3D game that simulates chicken invaders.
+
 ========================================================================
     CONSOLE APPLICATION : OpenGL3DTemplate Project Overview
 ========================================================================
